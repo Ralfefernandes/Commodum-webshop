@@ -11,7 +11,7 @@ Laatste versie: 1.0-beta
 - Ubuntu server
 - Composer2+
 # Installatie
-Browser
+#### Browser
 
 Nadat u de bestanden naar de server hebt gedownload en gekopieerd hebt, navigeert u naar commodun-webshop/.env  en brengt wijzing  in :
 - DB_DATABASE=thuisbezorgd
