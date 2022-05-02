@@ -3,7 +3,6 @@ Het doel van dit project is het versterken van de concurrentiepositie binnen de 
 ### Laravel 
 Commodum-webshop is een e-commerce website ontworpen op basis van Laravel 8, Bootstrap5.1 en VueJs 3.0 framework.
 
-Laatste versie: 1.0-beta
 
 ### Vereisten:
 - Vue.js
