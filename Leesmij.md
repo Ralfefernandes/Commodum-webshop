@@ -38,6 +38,9 @@ Nadat de commando’s uitgevoerd zijn, ga dan naar uw browser. Mocht er iets mis
 
 4.	Voer de vereiste database- en beheerdersgegevens in. Je bent klaar.
 
+## Document
+[Link to Google](https://www.google.com)
+
 ### License
 
 Dit project valt onder de GNU General Public License
