@@ -1,4 +1,6 @@
-# Commodum-webshop
+# De supermarkt Commodum Copia
+Het doel van dit project is het versterken van de concurrentiepositie binnen de huidige markt. Om dit te realiseren is er voor het Commodum Copia een nieuw systeem opgezet. Dit systeem is gericht op het creëren van een mogelijkheid om online  producten te bestellen . Hierbij is rekening gehouden met de bestaande bedrijfsvoering.
+### Laravel 
 Commodum-webshop is een e-commerce website ontworpen op basis van Laravel 8, Bootstrap5.1 en VueJs 3.0 framework.
 
 Laatste versie: 1.0-beta
