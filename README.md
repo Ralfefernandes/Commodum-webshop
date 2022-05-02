@@ -17,7 +17,7 @@ Commodum-webshop is een e-commerce website ontworpen op basis van Laravel 8, Boo
 # Installatie
 #### Browser
 
-Nadat u de bestanden naar de server hebt gedownload en gekopieerd hebt, navigeert u naar commodun-webshop/.env  en brengt wijzing  in :
+Nadat u de bestanden naar de server heeft gekopieerd en gedownload, navigeert u naar commodun-webshop/.env  en brengt wijzing  in:
 - DB_DATABASE=thuisbezorgd
 - DB_USERNAME=thuisbezorgd
 - DB_PASSWORD=19283 
