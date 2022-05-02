@@ -3,11 +3,16 @@ Het doel van dit project is het versterken van de concurrentiepositie binnen de 
 ### Laravel 
 Commodum-webshop is een e-commerce website ontworpen op basis van Laravel 8, Bootstrap5.1 en VueJs 3.0 framework.
 
+## Ontwikkelomgeving 
+- Ubuntu 21.10  server
+- Visual studio
+- Apache2 server
+- Raspberry Pi Model 4 (4GB ram en 128GB Micro SD)
+
 
 ### Vereisten:
 - Vue.js
 - PHP >= 8.0 – OpenSSL PHP Extension – PDO PHP Extension – mbstring PHP Extension – Tokenizer PHP Extension – XML PHP Extension
-- Ubuntu server
 - Composer2+
 # Installatie
 #### Browser
