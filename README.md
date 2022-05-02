@@ -1,6 +1,4 @@
 # Commodum-webshop
-## Inleiding
-
 Commodum-webshop is een e-commerce website ontworpen op basis van Laravel 8, Bootstrap5.1 en VueJs 3.0 framework.
 
 Laatste versie: 1.0-beta
@@ -28,8 +26,11 @@ Nadat de commando’s uitgevoerd zijn, ga dan naar uw browser. Mocht er iets mis
 
 ### console
 1.	Download de Commodum-webshop
-2.	Navegeer naar de hoofdmap van de commodum-webshop en voer de volgende commando’s uit:` php artisan commodum-webshop:install`
-3.	Voer de vereiste database- en beheerdersgegevens in. Je bent klaar.
+2.	Navegeer naar de hoofdmap en voer de volgende commando’s uit:
+
+` php artisan commodum-webshop:install`
+
+4.	Voer de vereiste database- en beheerdersgegevens in. Je bent klaar.
 
 ### License
 
