@@ -41,6 +41,9 @@ Nadat de commando’s uitgevoerd zijn, ga dan naar uw browser. Mocht er iets mis
 ### Document
 De documentatie van dit project is hier te vinden: [OneDrive](https://1drv.ms/w/s!ApX_BfpYlSLNiYh0t2ic8ebHpoMcAA?e=MM3bQb).
 
+### Contributing
+[Tweakers](https://gathering.tweakers.net/forum/list_messages/2125578/1)
+
 ### License
 
 Dit project valt onder de GNU General Public License
