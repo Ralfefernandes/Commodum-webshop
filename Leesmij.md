@@ -38,8 +38,8 @@ Nadat de commando’s uitgevoerd zijn, ga dan naar uw browser. Mocht er iets mis
 
 4.	Voer de vereiste database- en beheerdersgegevens in. Je bent klaar.
 
-## Document
-[Link to Google](https://www.google.com)
+### Document
+De documentatie van dit project is hier te vinden: [OneDrive](https://1drv.ms/w/s!ApX_BfpYlSLNiYh0t2ic8ebHpoMcAA?e=MM3bQb).
 
 ### License
 
