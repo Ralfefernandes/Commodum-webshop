@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Models\Processing;
-use Cartalyst\Stripe\Stripe;
-use PhpParser\Node\Expr\Isset_;
-use Psy\CodeCleaner\IssetPass;
+use App\Models\Product;
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartsController extends Controller
 {
@@ -19,7 +18,11 @@ class CartsController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
         return view('pages.checkout');
+        } else{
+            return redirect('/');
+        }
     }
 
     /**
@@ -146,109 +149,124 @@ class CartsController extends Controller
         return response()->json($finalData);
     }
     public function processPayment(Request $request)
-    {
-        $firstName = $request->get('firstName');
-        $lastName = $request->get('lastName');
-        $address = $request->get('address');
-        $city = $request->get('city');
-        $zipCode = $request->get('zipCode');
-        $email = $request->get('email');
-        $phone = $request->get('phone');
-        $country = $request->get('country');
-        $cardType = $request->get('cardType');
-        $expirationMonth = $request->get('expirationMonth');
-        $expirationYear = $request->get('expirationYear');
-        $cvv = $request->get('cvv');
-        $cardNumber = $request->get('cardNumber');
-        $amount = $request->get('amount');
-        $orders = $request->get('order');
-        $ordersArray = [];
+    {      
+         $firstName = $request->get('firstName');
+         $lastName = $request->get('lastName');
+         $address = $request->get('address');
+         $city = $request->get('city');
+         $zipCode = $request->get('zipCode');
+         $email = $request->get('email');
+         $phone = $request->get('phone');
+         $country = $request->get('country');
+         $cardType = $request->get('cardType');
+         $expirationMonth = $request->get('expirationMonth');
+         $expirationYear = $request->get('expirationYear');
+         $verzendDatum = $request->get('verzendDatum');
+         $cvv = $request->get('cvv');
+         $cardNumber = $request->get('cardNumber');
+         $amount = $request->get('amount');
+         $orders = $request->get('order');
+         $ordersArray = [];
 
-        // getting orders details
-        foreach($orders as $order)
-        {
-            if(isset($order['id']))
-            {
-                $ordersArray[$order['id']]['order_id'] = $order['id'];
-                $ordersArray[$order['id']]['quantity'] = $order['quantity'];
+         // getting orders details
+         foreach($orders as $order)
+         {
+             if(isset($order['id']))
+             {
+                 $ordersArray[$order['id']]['order_id'] = $order['id'];
+                 $ordersArray[$order['id']]['quantity'] = $order['quantity'];
+ 
+             }
+            // dd($order, $ordersArray);
 
-            }
-        }
-        // process payment
+         }
 
-        $stripe = Stripe::make(env('STRIPE_KEY'));
 
-        $token = $stripe->tokens()->create([
-            'card' => [
-                'number' => $cardNumber,
-                'exp_month' => $expirationMonth,
-                'exp_year' => $expirationYear,
-                'cvc' => $cvv,
-            ],
-        ]);
-        if (!$token['id']) {
-            session()->flush('error', 'Stripe Token generation failed');
-            return;
-        }
-        // Create a customer Stripe
-        $customer = $stripe->customers()->create([
-            'name' => $firstName. ''.$lastName,
-            'email' => $email,
-            'phone' => $phone,
-            'address' => [
-                'line1' => $address,
-                'postal_code' => $zipCode,
-                'city' => $city,
-                'country' => $country,
-            ],
-            'shipping' => [
-                'name' => $firstName.' '.$lastName,
-                'address' => [
-                'line1' => $address,
-                'postal_code' => $zipCode,
-                'city' => $city,
-                'country' => $country,
-                ],
-            ],
+         // process payment
+
+          $stripe = Stripe::make(env('STRIPE_KEY'));
+
+          $token = $stripe->tokens()->create([
+             'card' => [
+                     'number' => $cardNumber,
+                     'exp_month' => $expirationMonth,
+                     'exp_year' => $expirationYear,
+                     'cvc' => $cvv,
+                 ]
+             ]);
+             if(!$token['id'])
+             {
+                 session()->flush('error', 'Stripe token generation failed');
+                 return;
+             }
+            // create a customer Stripe
+ // Create a customer Stripe
+         $customer = $stripe->customers()->create([
+             'name' => $firstName. ''.$lastName,
+             'email' => $email,
+             'phone' => $phone,
+             
+             'address' => [
+                 'line1' => $address,
+                 'postal_code' => $zipCode,
+                 'city' => $city,
+                 'country' => $country,
+             ],
+
+             'shipping' => [
+                 'name' => $firstName.' '.$lastName,
+                 'address' => [
+                 'line1' => $address,
+                 'postal_code' => $zipCode,
+                 'city' => $city,
+                 'country' => $country,
+                 ],
+             ],
             'source' => $token['id'],
-        ]);
-        // code for charging the client in Stripe
-        $charge = $stripe->charges()->create([
-            'customer' => $customer['id'],
-            'currency' => 'eur',
-            'amount' => $amount,
-            'description' => 'Betaling van de bestelling',
-            // 'total' => items.totalAmount,
-        ]);
-        if($charge['status'] =='succeeded')
-        {
-            // capture the datails from Stripe
-            $customerIdStripe = $charge['id'];
-            $amountRec = $charge['amount'];
-            $client_id = auth()->user()->id;
+             ]);
+             // Code for chargin the client in Stripe
+             $charge = $stripe->charges()->create([
+                 'customer' => $customer['id'],
+                 'currency' => 'eur',
+                 'amount' => $amount,
+                 'description' => 'Betaling van de bestelling',
+               // 'total' => items.totalAmount,
+         ]);
+         if($charge['status'] =='succeeded')
+         {
+             // capture the datails from Stripe
+             $customerIdStripe = $charge['id'];
+             $amountRec = $charge['amount'];
+             $client_id = auth()->user()->id;
+ 
+             $processingDetails = Processing::create([
+                 'client_id' => $client_id,
+                 'client_name' => $firstName. ''.$lastName,
+                 'client_address' => json_encode([
+                                         'line1' => $address,
+                                         'postal_code' => $zipCode,
+                                         'city' => $city,
+                                         'country' => $country,
+                                     ]),
+                                     'delivery_estimate' => $verzendDatum,
 
-            // de gegevens van de besteller invoegen in de database
-            $processingDetails = Processing::create([
-                'client_name'  => $firstName, ''.$lastName,
-                'client_id' => $client_id,
-                'client_address' => $address,               
-                'order_details' => json_encode($ordersArray),
-                'amount' => $amount,
-                'currency' => $charge['currency'],
 
-            ]);
-            if($processingDetails)
-            {
-                // clear the cart after payment success
-                Cart::where('user_id', $client_id)->delete();
-
-                return ['success' => 'Order Completed successfully'];
-            }
-        }
-        else {
-            return ['error' => 'Order Failed contact support'];
-
-        }
+                 'order_details' => json_encode($ordersArray),
+                 'amount' => $amount,
+                 'currency' => $charge['currency'],
+ 
+             ]);
+             dd($processingDetails);
+             if($processingDetails)
+             {
+                 // clear the cart after payment success
+                 Cart::where('user_id', $client_id)->delete();
+ 
+                 return ['success' => 'Order Completed successfully'];
+             }
+         }
+         else {
+             return ['error' => 'Order Failed contact support'];
+         }
     }
-
 }
