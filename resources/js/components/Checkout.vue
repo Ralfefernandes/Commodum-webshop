@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
           <div class="box">
-            <h3 class="box-title">Producten in de winkelwagen</h3>
+            <h3 class="box-title">Products in your cart</h3>
             <div class="plan-selection" v-for="item in items" :key="item.id">
               <div class="plan-data" v-if="item.name">
                 <input
@@ -14,7 +14,7 @@
                   class="with-font"
                   value="sel"
                 />
-                <label for="question1">{{ item.name }}</label>
+                <label for="question1">{{item.image_name}}{{ item.name }}</label>
                 <p class="plan-text">Aantal: {{ item.quantity }}</p>
                 <span class="plan-price"> Prijs: {{ item.sale_price }} </span>
               </div>
@@ -214,6 +214,22 @@
                       <div class="clearfix"></div>
                     </div>
                   </div>
+                  <br>
+                    <div class="form-group">
+                    <div class="col-md-12">
+                      <strong>Bezorgmoment kiezen</strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                      <select class="form-control" name="" v-model="verzendDatum">
+                        <option value="">Datum verzenden</option>
+                        <option value="maandag">Maandag</option>
+                        <option value="dinsdag">Disndag</option>
+                        <option value="woensdag">Woensdag</option>
+                        <option value="donderdag">Donderdag</option>
+                        <option value="vrijdag">Vrijdag</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <button
@@ -224,6 +240,10 @@
                       </button>
                     </div>
                   </div>
+                  <!-- Date picker -->
+                 <br />
+               
+                  <!-- end date picker -->
                 </div>
               </div>
               <!--CREDIT CART PAYMENT END-->
@@ -285,6 +305,7 @@ export default {
       cardType:'',
       expirationMonth: '',
       expirationYear: '',
+      verzendDatum: '',
       cvv:'',
       cardNumber:'',
     }
@@ -296,7 +317,7 @@ export default {
       console.log(this.items);
     },
     async getUserAddress(){
-      if(this.firstName != '' && this.address != '' && this.cardNumber && this.cvv)
+      if(this.firstName != '' && this.address != '' && this.verzendDatum != '' && this.cardNumber && this.cvv)
       {
        // Process payment.
         let response = await axios.post("/process/user/payment", {
@@ -311,6 +332,7 @@ export default {
         'cardType':this.cardType,
         'expirationMonth':this.expirationMonth,
         'expirationYear':this.expirationYear,
+        'verzendDatum': this.verzendDatum,
         'cvv':this.cvv,
         'cardNumber':this.cardNumber,
         'amount': this.items.totalAmount,
@@ -341,3 +363,4 @@ export default {
   }
 };
 </script>
+
